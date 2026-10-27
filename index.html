@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cypher Oracle</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #05070d; color: #e8e6e1; font-family: system-ui, sans-serif; }
+    .card { background: #0c0e16; border: 1px solid rgba(255,255,255,0.06); }
+    .pill { background: #1a1d28; border: 1px solid rgba(255,255,255,0.08); }
+    .btn { background: #f0762a; color: #05070d; font-weight: 600; }
+    .accent { color: #f0762a; }
+    .bar { height: 4px; background: #1a1d28; border-radius: 2px; overflow: hidden; }
+    .bar > div { height: 100%; background: #f0762a; transition: width 0.4s; }
+  </style>
+</head>
+<body class="min-h-screen antialiased">
+  <div class="max-w-md mx-auto p-4 min-h-screen flex flex-col">
+    <div class="flex justify-between items-center mb-5">
+      <a href="https://cypheranon-dev.github.io/Maskwallet/" class="text-gray-400">←</a>
+      <span class="text-sm text-gray-500">Oracle</span>
+      <span class="text-[10px] accent pill px-2 py-1 rounded">Native AI</span>
+    </div>
+
+    <div class="card rounded-2xl p-5 flex-1 flex flex-col">
+      <div class="text-lg font-semibold mb-1">Cypher Oracle</div>
+      <p class="text-xs text-gray-400 mb-4">Stake-weighted set. Native AI. Autoscaling. Self-learning.</p>
+
+      <div class="pill rounded-xl p-4 grid grid-cols-3 text-center mb-4">
+        <div><div class="text-xs text-gray-500">Active nodes</div><div class="font-semibold" id="nodes">24</div></div>
+        <div><div class="text-xs text-gray-500">Stake</div><div class="accent font-semibold">12.4M</div></div>
+        <div><div class="text-xs text-gray-500">Accuracy</div><div class="font-semibold" id="acc">99.2%</div></div>
+      </div>
+
+      <div class="text-xs text-gray-500 mb-2">Autoscaling</div>
+      <div class="flex justify-between text-xs mb-1"><span>Load</span><span id="load-pct">42%</span></div>
+      <div class="bar mb-1"><div id="load-bar" style="width:42%"></div></div>
+      <div class="text-xs text-gray-500 mb-4" id="scale-status">Stable · within target</div>
+
+      <div class="text-xs text-gray-500 mb-2">Self-learning</div>
+      <div class="pill rounded-xl p-3 text-xs space-y-1.5 mb-4">
+        <div class="flex justify-between"><span>Model</span><span class="accent">CIP-Oracle v3</span></div>
+        <div class="flex justify-between"><span>Last update</span><span id="last-upd">2m ago</span></div>
+        <div class="flex justify-between"><span>Improvement</span><span class="accent">+0.4% / 24h</span></div>
+        <div class="flex justify-between"><span>Training</span><span>On-chain residuals</span></div>
+      </div>
+
+      <div class="text-xs text-gray-500 mb-2">Feeds</div>
+      <div class="space-y-2 text-sm mb-4">
+        <div class="flex justify-between py-1 border-b border-gray-800"><span>CYPHER / USD</span><span>$1.4723</span></div>
+        <div class="flex justify-between py-1 border-b border-gray-800"><span>cBTC / USD</span><span>$67,420</span></div>
+        <div class="flex justify-between py-1 border-b border-gray-800"><span>cETH / USD</span><span>$2,481</span></div>
+        <div class="flex justify-between py-1"><span>Shielded pool</span><span class="text-gray-500">range proof</span></div>
+      </div>
+
+      <div class="pill rounded-xl p-3 text-xs text-gray-400 mb-4">
+        Stake-weighted. No foundation key. Native AI improves from residual errors. Autoscaling adds/removes nodes by load. Referenced on <a href="https://cypher-fk.vercel.app" class="accent" target="_blank">cypher-fk.vercel.app</a>.
+      </div>
+
+      <button id="stake" class="btn w-full py-4 rounded-2xl mt-auto">Stake to oracle set</button>
+    </div>
+  </div>
+  <script>
+    let load = 42, nodes = 24, acc = 99.2;
+    setInterval(() => {
+      load = Math.max(18, Math.min(88, load + (Math.random()*12 - 6)));
+      if (load > 70 && nodes < 48) { nodes += 2; }
+      if (load < 30 && nodes > 16) { nodes -= 2; }
+      acc = Math.min(99.9, acc + (Math.random()*0.02));
+      document.getElementById('load-pct').textContent = Math.round(load) + '%';
+      document.getElementById('load-bar').style.width = load + '%';
+      document.getElementById('nodes').textContent = nodes;
+      document.getElementById('acc').textContent = acc.toFixed(1) + '%';
+      document.getElementById('scale-status').textContent = load > 70 ? 'Scaling up' : load < 30 ? 'Scaling down' : 'Stable · within target';
+    }, 2500);
+    document.getElementById('stake').onclick = () => alert('Stake prepared. Oracle weight increases with your $CYPHER. No foundation override.');
+  </script>
+</body>
+</html>
